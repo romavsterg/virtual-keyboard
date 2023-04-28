@@ -18,8 +18,64 @@ body {
     height: calc(25vh - 40px);
 }
 
-.keyboard-kontainer {
-    width: auto;
+.keyboard-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    gap: 10px;
+    left: 0;
+    bottom: 0;
     height: auto;
-    background-color: grey;
+    width: auto;
+    width: calc(100vw - 40px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+    background-color: #19a488;
+    user-select: none;
+}
+
+.row {
+    width: calc(100vw - 40px);
+    display: flex;
+    gap: 20px;
+}
+
+.wide-key {
+    max-width: 120px !important; 
+}
+
+.space-key {
+    letter-spacing: 5px;
+    max-width: 376px !important;
+}
+
+.key {
+    flex: 1;
+    /* max-width: 5.5%; */
+    /* width: 8%; */
+    max-width: 8%;
+    height: 45px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    background: rgb(124, 118, 118);
+    cursor: pointer;
+    color:rgb(117, 205, 54);
+    font-size: 1.05rem;
+    position: relative;
+    transition: 0.6s;
+    -webkit-transition: 0.6s;
+    -moz-transition: 0.6s;
+    -ms-transition: 0.6s;
+    -o-transition: 0.6s;
+}
+
+.capsMode {
+    color:rgb(196, 255, 155);
+}
+
+.key:hover, .key:active {
+    background: rgba(81, 77, 77, 0.278);
 }
