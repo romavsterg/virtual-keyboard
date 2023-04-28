@@ -2,6 +2,10 @@ const body = document.querySelector(`body`)
 
 let language = localStorage.getItem('language') ? localStorage.getItem('language') : 'Eng'
 let shiftFlag = false
+let ctrl = false
+let shift = false
+
+
 localStorage.setItem('language', language)
 const checkKey = (key) => {
     switch (key){
@@ -43,6 +47,16 @@ const checkKey = (key) => {
             input.value += ' '
         case 'ShiftLeft':
         case 'ShiftRight':
+            shift = true
+            if (ctrl) {
+                language = language == 'Eng' ? 'Rus' : 'Eng'
+                console.log('changed language to', language)
+                keyboard.innerHTML = ''
+                fillKeyboard(language)
+                console.log(ctrl)
+                console.log(shift)
+                break
+            }
             if(!shiftFlag){
                 capsMode = !capsMode
             }
@@ -54,7 +68,10 @@ const checkKey = (key) => {
             })
             break
         case 'ControlLeft':
-            if (capsMode) {
+            ctrl = true
+            console.log(ctrl)
+            console.log(shift)
+            if (shift) {
                 language = language == 'Eng' ? 'Rus' : 'Eng'
                 console.log('changed language to', language)
                 keyboard.innerHTML = ''
@@ -145,11 +162,15 @@ document.addEventListener('keyup', (key)=>{
                     capsMode = !capsMode
                 }
                 shiftFlag = false
+                shift = false
                 document.querySelectorAll('.key').forEach((elem)=>{
                     if (!elem.classList.contains('wide-key')) {
                         elem.textContent = capsMode? elem.textContent.toUpperCase() : elem.textContent.toLowerCase()
                     }
                 })
+            }
+            if (key.key == 'Control') {
+                ctrl = false
             }
         }
     })

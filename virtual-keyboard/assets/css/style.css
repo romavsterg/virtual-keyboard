@@ -51,7 +51,7 @@ body {
 }
 
 .wide-key {
-    max-width: 120px !important; 
+    max-width: 130px !important; 
 }
 
 .space-key {
@@ -74,8 +74,8 @@ body {
     background: rgb(124, 118, 118);
     cursor: pointer;
     color:rgb(117, 205, 54);
-    font-size: 1.05rem;
     position: relative;
+    font-size: 20px;
     transition: 0.6s;
     -webkit-transition: 0.6s;
     -moz-transition: 0.6s;
