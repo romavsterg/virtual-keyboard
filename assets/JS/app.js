@@ -1,5 +1,7 @@
 const body = document.querySelector(`body`)
 
+let language = 'Eng'
+
 const checkKey = (key) => {
     switch (key){
         case 'Space':
@@ -27,20 +29,33 @@ const checkKey = (key) => {
             inputText.pop()
             input.value = inputText.join('')
             break
-        case 'ControlLeft':
+        case 'ControlRight':
         case 'Win':
         case 'AltLeft':
         case 'AltRight':
-        case 'ControlRight':
         case '←':
         case '↓':
         case '→':
-        case 'ShiftRight':
-        case 'ShiftLeft':
         case 'Enter':
             break
         case 'Space':
             input.value += ' '
+        case 'ShiftLeft':
+        case 'ShiftRight':
+            capsMode = !capsMode
+            document.querySelectorAll('.key').forEach((elem)=>{
+                if (!elem.classList.contains('wide-key')) {
+                    elem.textContent = capsMode? elem.textContent.toUpperCase() : elem.textContent.toLowerCase()
+                }
+            })
+            break
+        case 'ControlLeft':
+            if (capsMode) {
+                language = language == 'Eng' ? 'Rus' : 'Eng'
+                console.log('changed language to', language)
+                keyboard.innerHTML = ''
+                fillKeyboard(language)
+            }
             break
         default:
             input.value += key
@@ -48,13 +63,21 @@ const checkKey = (key) => {
     }
 }
 
+console.log(navigator)
+
 const winEngKeys = [['`',        '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
                     ['Tab',      'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\'],
-                    ['CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', "'"],
-                    ['ShiftLeft',    'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '↑', 'ShiftRight'],
+                    ['CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'"],
+                    ['ShiftLeft','z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '↑', 'ShiftRight'],
                     ['ControlLeft', 'Win', 'AltLeft', 'Space', 'AltRight', 'ControlRight', '←', '↓', '→']]
 
-const winEngAuxiliaryKeys = ['ControlLeft', 'Win', 'AltLeft', 'Space', 'AltRight', 'ControlRight', '←', '↓', '→','ShiftLeft','ShiftRight', 'Backspace', 'Tab','CapsLock']
+const winRusKeys = [['`',       '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
+                    ['Tab',      'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\'],
+                    ['CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', "ж", 'э'],
+                    ['ShiftLeft','я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', '↑', 'ShiftRight'],
+                    ['ControlLeft', 'Win', 'AltLeft', 'Пробел', 'AltRight', 'ControlRight', '←', '↓', '→']]
+
+const winEngAuxiliaryKeys = ['ControlLeft', 'Win', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ShiftLeft','ShiftRight', 'Backspace', 'Tab','CapsLock', 'Пробел']
 
 let capsMode = false
 
@@ -67,19 +90,22 @@ const keyboard = document.querySelector(`.keyboard-container`)
 
 let input = document.querySelector('.input-result')
 
-winEngKeys.forEach((keyRow)=>{
-    let row = document.createElement('div')
-    row.classList.add('row')
-    keyboard.appendChild(row)
-    keyRow.forEach((key)=>{
-        let keyButton = document.createElement('button')
-        keyButton.classList.add('key')
-        if (winEngAuxiliaryKeys.includes(key)) {keyButton.classList.add('wide-key')}
-        if (key == 'Space') {keyButton.classList.add('space-key')}
-        keyButton.textContent = key
-        row.appendChild(keyButton)
+const fillKeyboard = (lang) =>{
+    (lang == 'Eng' ? winEngKeys : winRusKeys).forEach((keyRow)=>{
+        let row = document.createElement('div')
+        row.classList.add('row')
+        keyboard.appendChild(row)
+        keyRow.forEach((key)=>{
+            let keyButton = document.createElement('button')
+            keyButton.classList.add('key')
+            if (winEngAuxiliaryKeys.includes(key)) {keyButton.classList.add('wide-key')}
+            if (key == 'Space'| key == 'Пробел') {keyButton.classList.add('space-key')}
+            keyButton.textContent = key
+            row.appendChild(keyButton)
+        })
     })
-})
+}
+
 
 document.addEventListener('click', (target) => {
     if (target.target.classList.contains('key')) {
@@ -92,6 +118,7 @@ document.addEventListener('click', (target) => {
 window.addEventListener('beforeunload', ()=>{localStorage.setItem('inputValue', input.value)})
 
 document.addEventListener('keydown', (key)=>{
+    // console.log(key)
     keyboard.querySelectorAll('.key').forEach((keyButton)=>{
         if (keyButton.textContent == (key.key.replace(/\s/g, 'Space').length == 1 ? key.key : key.code)) {
             keyButton.classList.add('pressed-key')
@@ -102,12 +129,23 @@ document.addEventListener('keydown', (key)=>{
 })
 
 document.addEventListener('keyup', (key)=>{
+    // console.log(key)
     keyboard.querySelectorAll('.key').forEach((keyButton)=>{
-        if (keyButton.textContent == (key.key.length == 1 ? key.key : key.code)) {
+        if (keyButton.textContent == (key.key.replace(/\s/g, 'Space').length == 1 ? key.key : key.code)) {
             keyButton.classList.remove('pressed-key')
+            if (key.key == 'Shift') {
+                capsMode = !capsMode
+                document.querySelectorAll('.key').forEach((elem)=>{
+                    if (!elem.classList.contains('wide-key')) {
+                        elem.textContent = capsMode? elem.textContent.toUpperCase() : elem.textContent.toLowerCase()
+                    }
+                })
+            }
         }
     })
 })
+
+fillKeyboard(language)
 
 //     if (key.key === 'Tab') {
 //         input.textContent += '  '
