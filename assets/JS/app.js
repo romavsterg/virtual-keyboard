@@ -1,6 +1,7 @@
 const body = document.querySelector(`body`)
 
-let language = 'Eng'
+let language = localStorage.getItem('language') ? localStorage.getItem('language') : 'Eng'
+
 localStorage.setItem('language', language)
 const checkKey = (key) => {
     switch (key){
@@ -63,7 +64,7 @@ const checkKey = (key) => {
     }
 }
 
-console.log(navigator)
+console.log(localStorage.getItem('language'))
 
 const winEngKeys = [['`',        '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
                     ['Tab',      'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\'],
@@ -116,7 +117,11 @@ document.addEventListener('click', (target) => {
     }
 })
 
-window.addEventListener('beforeunload', ()=>{localStorage.setItem('inputValue', input.value);localStorage.setItem('language', language)})
+window.addEventListener('beforeunload', ()=>{
+    localStorage.setItem('inputValue', input.value)
+    console.log(language)
+    localStorage.setItem('language', language)
+})
 
 document.addEventListener('keydown', (key)=>{
     // console.log(key)
