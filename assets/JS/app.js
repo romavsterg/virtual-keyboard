@@ -1,5 +1,8 @@
 const body = document.querySelector(`body`)
 
+
+
+
 // const winEngKeys = [[['`', '`'], ['!', '1'], ['@', '2'], ['#', '3'], ['$', '4'], ['%', '5'], ['^', '6'], ['&', '7'], ['*', '8'], ['(', '9'], [')', '0'], ['_', '-'], ['+', '='], 'Backspace']]
 const winEngKeys = [['`',        '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
                     ['Tab',      'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\'],
@@ -13,7 +16,7 @@ let capsMode = false
 
 const pressedKeys = []
 
-body.innerHTML += `<textarea class="input-result"></textarea>`
+body.innerHTML += `<textarea class="input-result">${localStorage.getItem('inputValue')}</textarea>`
 
 body.innerHTML += `<div class="keyboard-container"></div>`
 const keyboard = document.querySelector(`.keyboard-container`)
@@ -40,10 +43,10 @@ document.addEventListener('click', (target) => {
         console.log('pressed key', key)
         switch (key){
             case 'Space':
-                input.textContent += ' '
+                input.value += ' '
                 break
             case 'Tab':
-                input.textContent += '\t'
+                input.value += '\t'
                 break
             case 'CapsLock':
                 capsMode = !capsMode
@@ -53,15 +56,21 @@ document.addEventListener('click', (target) => {
                     if (!elem.classList.contains('wide-key')) {
                         elem.textContent = capsMode? elem.textContent.toUpperCase() : elem.textContent.toLowerCase()
                     }
-                    console.log('das')
                 })
                 break
+            case 'Backspace':
+                let inputText = input.value.split('')
+                inputText.pop()
+                input.value = inputText.join('')
+                break
             default:
-                input.textContent += key
+                input.value += key
                 break
         }
     }
 })
+
+window.addEventListener('beforeunload', ()=>{localStorage.setItem('inputValue', input.value)})
 
 // document.addEventListener('keydown', (key)=>{
 //     console.log('pressed key', key)})
