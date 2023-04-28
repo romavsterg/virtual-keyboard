@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+body {
+    width: calc(100vw - 60px);
+    height: auto;
+    padding: 30px;
+}
+
+.input-result {
+    color: rgb(46, 148, 220);
+    padding: 20px;
+    background-color: dimgray;
+    width: calc(100% - 40px);
+    height: calc(25vh - 40px);
+}
+
+.keyboard-kontainer {
+    width: auto;
+    height: auto;
+    background-color: grey;
+}
