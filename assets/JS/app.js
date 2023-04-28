@@ -1,7 +1,7 @@
 const body = document.querySelector(`body`)
 
 let language = 'Eng'
-
+localStorage.setItem('language', language)
 const checkKey = (key) => {
     switch (key){
         case 'Space':
@@ -89,6 +89,7 @@ body.innerHTML += `<div class="keyboard-container"></div>`
 const keyboard = document.querySelector(`.keyboard-container`)
 
 let input = document.querySelector('.input-result')
+localStorage.setItem('inputValue', input.value? input.value:'');
 
 const fillKeyboard = (lang) =>{
     (lang == 'Eng' ? winEngKeys : winRusKeys).forEach((keyRow)=>{
@@ -115,7 +116,7 @@ document.addEventListener('click', (target) => {
     }
 })
 
-window.addEventListener('beforeunload', ()=>{localStorage.setItem('inputValue', input.value)})
+window.addEventListener('beforeunload', ()=>{localStorage.setItem('inputValue', input.value);localStorage.setItem('language', language)})
 
 document.addEventListener('keydown', (key)=>{
     // console.log(key)
