@@ -124,9 +124,10 @@ window.addEventListener('beforeunload', ()=>{
 })
 
 document.addEventListener('keydown', (key)=>{
-    // console.log(key)
+    console.log((key.key.replace(/\s/g, 'Space').length == 1 ? key.key : key.code))
     keyboard.querySelectorAll('.key').forEach((keyButton)=>{
-        if (keyButton.textContent == (key.key.replace(/\s/g, 'Space').length == 1 ? key.key : key.code)) {
+        if (keyButton.textContent == (key.key.replace(/\s/g, (language=='Eng'?'Space':'Пробел')).length == 1 ? key.key : key.code).replace('Space', (language=='Rus'?'Пробел':'Space'))) {
+            console.log(key.key.replace(/\s/g, 'Space'))
             keyButton.classList.add('pressed-key')
             checkKey((key.key.replace(/\s/g, 'Space').length == 1 ? key.key : key.code))
         }
@@ -135,9 +136,9 @@ document.addEventListener('keydown', (key)=>{
 })
 
 document.addEventListener('keyup', (key)=>{
-    // console.log(key)
+    console.log(key)
     keyboard.querySelectorAll('.key').forEach((keyButton)=>{
-        if (keyButton.textContent == (key.key.replace(/\s/g, 'Space').length == 1 ? key.key : key.code)) {
+        if (keyButton.textContent == (key.key.replace(/\s/g, 'Space').length == 1 ? key.key : key.code).replace('Space', (language=='Rus'?'Пробел':'Space'))) {
             keyButton.classList.remove('pressed-key')
             if (key.key == 'Shift') {
                 capsMode = !capsMode
