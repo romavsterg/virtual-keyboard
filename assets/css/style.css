@@ -29,9 +29,19 @@ body {
     height: auto;
     width: auto;
     width: calc(100vw - 40px);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.6);
+    background-color: #199a88;
+    user-select: none;
+    transition: 0.6s;
+    -webkit-transition: 0.6s;
+    -moz-transition: 0.6s;
+    -ms-transition: 0.6s;
+    -o-transition: 0.6s;
+}
+
+.keyboard-container:hover {
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
     background-color: #19a488;
-    user-select: none;
 }
 
 .row {
