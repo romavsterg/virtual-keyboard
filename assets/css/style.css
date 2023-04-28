@@ -63,8 +63,9 @@ body {
     flex: 1;
     /* max-width: 5.5%; */
     /* width: 8%; */
-    max-width: 8%;
+    max-width: 10%;
     height: 45px;
+    padding: 10px;
     border-radius: 4px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -87,6 +88,11 @@ body {
 }
 
 .key:hover, .key:active {
+    background: rgba(81, 77, 77, 0.278);
+    color:rgb(196, 255, 155);
+}
+
+.pressed-key {
     background: rgba(81, 77, 77, 0.278);
     color:rgb(196, 255, 155);
 }
