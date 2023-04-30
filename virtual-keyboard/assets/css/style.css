@@ -6,8 +6,22 @@
 
 body {
     width: calc(100vw - 60px);
-    height: auto;
+    height: calc(100vh - 60px);
     padding: 30px;
+    /* background-color: rgb(19, 140, 124); */
+    background-image: -webkit-linear-gradient(top, #19675d 0%, #3cdac5 100%);
+    background-size: cover;
+}
+
+h1 {
+    font-family: 'Times New Roman', Times, serif;
+    margin-bottom: 40px;
+}
+
+p {
+    font-size: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-bottom: 20px;
 }
 
 .input-result {
@@ -16,6 +30,14 @@ body {
     background-color: dimgray;
     width: calc(100% - 40px);
     height: calc(25vh - 40px);
+    resize: none;
+    font-size: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
 }
 
 .keyboard-container {
@@ -60,21 +82,20 @@ body {
 }
 
 .key {
-    flex: 1;
-    /* max-width: 5.5%; */
-    /* width: 8%; */
     max-width: 10%;
     height: 45px;
     padding: 10px;
+    position: relative;
+    color:rgb(117, 205, 54);
+    background: rgb(124, 118, 118);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     border-radius: 4px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
-    background: rgb(124, 118, 118);
+    flex: 1;
     cursor: pointer;
-    color:rgb(117, 205, 54);
-    position: relative;
     font-size: 20px;
     transition: 0.6s;
     -webkit-transition: 0.6s;
