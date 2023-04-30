@@ -1,6 +1,10 @@
 const body = document.querySelector(`body`)
 
 let language = localStorage.getItem('language') ? localStorage.getItem('language') : 'Eng'
+let shiftFlag = false
+let ctrl = false
+let shift = false
+
 
 localStorage.setItem('language', language)
 const checkKey = (key) => {
@@ -43,7 +47,20 @@ const checkKey = (key) => {
             input.value += ' '
         case 'ShiftLeft':
         case 'ShiftRight':
-            capsMode = !capsMode
+            shift = true
+            if (ctrl) {
+                language = language == 'Eng' ? 'Rus' : 'Eng'
+                console.log('changed language to', language)
+                keyboard.innerHTML = ''
+                fillKeyboard(language)
+                console.log(ctrl)
+                console.log(shift)
+                break
+            }
+            if(!shiftFlag){
+                capsMode = !capsMode
+            }
+            shiftFlag = true
             document.querySelectorAll('.key').forEach((elem)=>{
                 if (!elem.classList.contains('wide-key')) {
                     elem.textContent = capsMode? elem.textContent.toUpperCase() : elem.textContent.toLowerCase()
@@ -51,7 +68,10 @@ const checkKey = (key) => {
             })
             break
         case 'ControlLeft':
-            if (capsMode) {
+            ctrl = true
+            console.log(ctrl)
+            console.log(shift)
+            if (shift) {
                 language = language == 'Eng' ? 'Rus' : 'Eng'
                 console.log('changed language to', language)
                 keyboard.innerHTML = ''
@@ -64,7 +84,6 @@ const checkKey = (key) => {
     }
 }
 
-console.log(localStorage.getItem('language'))
 
 const winEngKeys = [['`',        '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
                     ['Tab',      'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\'],
@@ -124,9 +143,9 @@ window.addEventListener('beforeunload', ()=>{
 })
 
 document.addEventListener('keydown', (key)=>{
-    // console.log(key)
     keyboard.querySelectorAll('.key').forEach((keyButton)=>{
-        if (keyButton.textContent == (key.key.replace(/\s/g, 'Space').length == 1 ? key.key : key.code)) {
+        if (keyButton.textContent == (key.key.replace(/\s/g, (language=='Eng'?'Space':'Пробел')).length == 1 ? key.key : key.code).replace('Space', (language=='Rus'?'Пробел':'Space'))) {
+            console.log(key.key.replace(/\s/g, 'Space'))
             keyButton.classList.add('pressed-key')
             checkKey((key.key.replace(/\s/g, 'Space').length == 1 ? key.key : key.code))
         }
@@ -135,17 +154,23 @@ document.addEventListener('keydown', (key)=>{
 })
 
 document.addEventListener('keyup', (key)=>{
-    // console.log(key)
     keyboard.querySelectorAll('.key').forEach((keyButton)=>{
-        if (keyButton.textContent == (key.key.replace(/\s/g, 'Space').length == 1 ? key.key : key.code)) {
+        if (keyButton.textContent == (key.key.replace(/\s/g, 'Space').length == 1 ? key.key : key.code).replace('Space', (language=='Rus'?'Пробел':'Space'))) {
             keyButton.classList.remove('pressed-key')
             if (key.key == 'Shift') {
-                capsMode = !capsMode
+                if(shiftFlag){
+                    capsMode = !capsMode
+                }
+                shiftFlag = false
+                shift = false
                 document.querySelectorAll('.key').forEach((elem)=>{
                     if (!elem.classList.contains('wide-key')) {
                         elem.textContent = capsMode? elem.textContent.toUpperCase() : elem.textContent.toLowerCase()
                     }
                 })
+            }
+            if (key.key == 'Control') {
+                ctrl = false
             }
         }
     })
