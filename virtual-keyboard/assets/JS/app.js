@@ -103,7 +103,10 @@ let capsMode = false
 
 const pressedKeys = []
 
-body.innerHTML += `<textarea class="input-result">${localStorage.getItem('inputValue')}</textarea>`
+body.innerHTML += `<h1>Virtual keyboard</h1>
+    <p>Tip: pres Control + Shift to change language of keyboard layout</p>
+    <textarea class="input-result">${localStorage.getItem('inputValue')?localStorage.getItem('inputValue'):''}</textarea>
+`
 
 body.innerHTML += `<div class="keyboard-container"></div>`
 const keyboard = document.querySelector(`.keyboard-container`)
